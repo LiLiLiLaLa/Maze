@@ -1,11 +1,12 @@
 #include "Stack.h"
 
+
 void StackInit(Stack* ps)
 {
 	ps->_a = (DataType*)malloc(sizeof(DataType)*START_SIZE);
 	ps->_top = 0;
 	ps->_capacity = START_SIZE;
-}//��ʼ��ջ
+}//初始化栈
 
 void StackDestory(Stack* ps)
 {
@@ -19,36 +20,36 @@ void StackDestory(Stack* ps)
 		free(ps->_a);
 		ps->_a = NULL;
 	}
-}//����ջ
+}//销毁栈
 
 void StackPush(Stack* ps, DataType x)
 {
 	assert(ps);
-	//����Ҫ����
-	if (ps->_capacity == ps->_top)//ջ����,��Ҫ����
+	//若需要扩容
+	if (ps->_capacity == ps->_top)//栈已满,需要扩容
 	{
-		ps->_a = realloc(ps->_a, sizeof(DataType)*(ps->_capacity + ADD_SIZE));//realloc�����Ӳ�����ָ��Ҫ���ݵĿռ��ָ�롢���ݺ�ռ��С
+		ps->_a = realloc(ps->_a, sizeof(DataType)*(ps->_capacity + ADD_SIZE));//realloc两个从参数：指向要扩容的空间的指针、扩容后空间大小
 		ps->_capacity += ADD_SIZE;
-		if (ps->_a == NULL)//��malloc����ʧ��ʱ���ؿ�
+		if (ps->_a == NULL)//当malloc扩容失败时返回空
 		{
-			perror("���ݳ���");
+			perror("增容出错");
 			return;
 		}
 	}
-	//�������ݻ��Ѿ����ݳɹ�
-	ps->_a[ps->_top] = x;//Ԫ����ջ
-	ps->_top++;//Ԫ����ջ������Ԫ�ظ�������
-}//Ԫ����ջ
+	//无需增容或已经增容成功
+	ps->_a[ps->_top] = x;//元素入栈
+	ps->_top++;//元素入栈，已有元素个数增加
+}//元素入栈
 
 void StackPop(Stack* ps)
 {
 	assert(ps);
 	if (ps->_top == 0)
 	{
-		return;//��ջ���޷���ջ
+		return;//空栈，无法弹栈
 	}
-	ps->_top--;//top--,���ʲ���ԭ��ջ��Ԫ�أ��൱�ڵ�ջ
-}//Ԫ�س�ջ
+	ps->_top--;//top--,访问不到原本栈顶元素，相当于弹栈
+}//元素出栈
 
 DataType StackTop(const Stack* ps)
 {
@@ -58,22 +59,22 @@ DataType StackTop(const Stack* ps)
 	assert(ps);
 	if (ps->_top == 0)
 	{
-		return s;//��ջ�޷�����ջ��������Ҫ�󷵻�ֵ������DataType�����Զ���һ���Ƿ�������Ϊ����ֵ
+		return s;//空栈无法返回栈顶，函数要求返回值类型是DataType，所以定义一个非法坐标作为返回值
 	}
 	else
 	{
 		return ps->_a[ps->_top - 1];
 	}
-}//����ջ��Ԫ��
+}//返回栈顶元素
 
 int StackEmpty(const Stack* ps)
 {
 	assert(ps);
-	return ps->_top == 0 ? 0 : 1;//��ջ����0�ǿշ���1
-}//�п�
+	return ps->_top == 0 ? 0 : 1;//空栈返回0非空返回1
+}//判空
 
 int StackSize(const Stack* ps)
 {
 	assert(ps);
 	return ps->_top;
-}//����ջ��Ԫ�ض���
+}//计算栈中元素多少
