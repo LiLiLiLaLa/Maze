@@ -1,6 +1,5 @@
 #include "Stack.h"
 
-
 void StackInit(Stack* ps)
 {
 	ps->_a = (DataType*)malloc(sizeof(DataType)*START_SIZE);
