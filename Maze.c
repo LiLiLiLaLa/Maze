@@ -12,25 +12,26 @@ void MazePrint()
 		}
 		printf("\n");
 	}
+	
 	printf("\n");
-}//´òÓ¡ÃÔ¹¬
+}//æ‰“å°è¿·å®«
 
 int CheckAccess(Pos next)
 {
 	if ((next._col >= 0) && (next._row >= 0) 
-		&& (next._col < N) && (next._row < N))//ÅÐ¶ÏÊÇ·ñÔ½½ç
+		&& (next._col < N) && (next._row < N))//åˆ¤æ–­æ˜¯å¦è¶Šç•Œ
 	{
-		if (maze[next._row][next._col] == 1)//ÏÂÒ»²½ÊÇ²ÅÊÇÍ¨Â·
+		if (maze[next._row][next._col] == 1)//ä¸‹ä¸€æ­¥æ˜¯æ‰æ˜¯é€šè·¯
 		{
-			return 1;//1±íÊ¾¿ÉÒÔÍ¨¹ý
+			return 1;//1è¡¨ç¤ºå¯ä»¥é€šè¿‡
 		}
 	}
-	return 0;//ÎÞ·¨Í¨¹ý·µ»Ø0
-}//ÅÐ¶ÏÏÂÒ»²½ÊÇ·ñ¿ÉÍ¨¹ý
+	return 0;//æ— æ³•é€šè¿‡è¿”å›ž0
+}//åˆ¤æ–­ä¸‹ä¸€æ­¥æ˜¯å¦å¯é€šè¿‡
 
 int MazeCheckIsAccess(Pos cur, Pos next)
 {
-	//ÅÐ¶ÏÔ½½çµÄÇé¿ö
+	//åˆ¤æ–­è¶Šç•Œçš„æƒ…å†µ
 	if ((next._col >= 0 && next._row >= 0
 		&& next._col < N && next._row<N)
 		&& (maze[next._row][next._col] == 1
@@ -38,31 +39,31 @@ int MazeCheckIsAccess(Pos cur, Pos next)
 	{
 		return 1;
 	}
-	//return 0±íÊ¾²»¿ÉÒÔÍ¨¹ý
+	//return 0è¡¨ç¤ºä¸å¯ä»¥é€šè¿‡
 	return 0;
-}//Ñ°ÕÒ×î¶ÌÂ·¾¶Ì½²âÏÂÒ»²½ÊÇ·ñ¿ÉÍ¨¹ý
+}//å¯»æ‰¾æœ€çŸ­è·¯å¾„æŽ¢æµ‹ä¸‹ä¸€æ­¥æ˜¯å¦å¯é€šè¿‡
 
 int pathsize = 0;
 
 int MazeGetPath(Pos entry)
 {
-	Pos cur = entry;//¼ÇÂ¼ÃÔ¹¬Èë¿Ú
+	Pos cur = entry;//è®°å½•è¿·å®«å…¥å£
 	Stack path;
 	StackInit(&path);
-	StackPush(&path, entry);//½«Èë¿Ú×ø±êÑ¹Õ»
-	maze[entry._row][entry._col] = 2;//×ß¹ýµÄµØ·½ÖÃÎª2
-	while (StackEmpty(&path))//Õ»²»Îª¿ÕÊ±¼ÌÐø×ß
+	StackPush(&path, entry);//å°†å…¥å£åæ ‡åŽ‹æ ˆ
+	maze[entry._row][entry._col] = 2;//èµ°è¿‡çš„åœ°æ–¹ç½®ä¸º2
+	while (StackEmpty(&path))//æ ˆä¸ä¸ºç©ºæ—¶ç»§ç»­èµ°
 	{
 		cur = StackTop(&path);
-		maze[cur._row][cur._col] = 2;//×ß¹ýµÄµØ·½ÖÃÎª2
-		if (cur._col == 5)//×ßµ½³ö¿Ú
+		maze[cur._row][cur._col] = 2;//èµ°è¿‡çš„åœ°æ–¹ç½®ä¸º2
+		if (cur._col == 5)//èµ°åˆ°å‡ºå£
 		{
-			if ((pathsize == 0) || StackSize(&path)<pathsize)//ÒÑ¾­ÕÒµ½³ö¿Ú»¹¿ÉÒÔÍùÉÏÏÂ×ßÊ±
+			if ((pathsize == 0) || StackSize(&path)<pathsize)//å·²ç»æ‰¾åˆ°å‡ºå£è¿˜å¯ä»¥å¾€ä¸Šä¸‹èµ°æ—¶
 			{
-				pathsize = StackSize(&path);//Â·¾¶ÎªµÚÒ»´Î×ßµ½³ö¿ÚÎª×¼
+				pathsize = StackSize(&path);//è·¯å¾„ä¸ºç¬¬ä¸€æ¬¡èµ°åˆ°å‡ºå£ä¸ºå‡†
 			}
 		}
-		//ÏÂ
+		//ä¸‹
 		Pos next = cur;
 		next._row -= 1;
 		if (CheckAccess(next))
@@ -70,7 +71,7 @@ int MazeGetPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//ÉÏ11
+		//ä¸Š11
 		next = cur;
 		next._row += 1;
 		if (CheckAccess(next))
@@ -78,7 +79,7 @@ int MazeGetPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//×ó
+		//å·¦
 		next = cur;
 		next._col -= 1;
 		if (CheckAccess(next))
@@ -86,7 +87,7 @@ int MazeGetPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//ÓÒ
+		//å³
 		next = cur;
 		next._col += 1;
 		if (CheckAccess(next))
@@ -94,29 +95,29 @@ int MazeGetPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		StackPop(&path);//»ØËÝ
+		StackPop(&path);//å›žæº¯
 	}
 	return 0;
-}//»ñÈ¡Ò»Ìõ×ß³öÃÔ¹¬µÄÂ·¾¶
+}//èŽ·å–ä¸€æ¡èµ°å‡ºè¿·å®«çš„è·¯å¾„
 
 int MazeGetShortPath(Pos entry)
 {
-	Pos cur = entry;//¼ÇÂ¼ÃÔ¹¬Èë¿Ú
+	Pos cur = entry;//è®°å½•è¿·å®«å…¥å£
 	Stack path;
 	StackInit(&path);
-	StackPush(&path, entry);//½«Èë¿Ú×ø±êÑ¹Õ»
-	maze[entry._row][entry._col] = 2;//×ß¹ýµÄµØ·½ÖÃÎª2
+	StackPush(&path, entry);//å°†å…¥å£åæ ‡åŽ‹æ ˆ
+	maze[entry._row][entry._col] = 2;//èµ°è¿‡çš„åœ°æ–¹ç½®ä¸º2
 	while (StackEmpty(&path))
 	{
 		cur = StackTop(&path);
 		if (cur._col == 5)
 		{
-			if ((pathsize == 0) || StackSize(&path) < pathsize)//ÒÑ¾­ÕÒµ½³ö¿Ú»¹¿ÉÒÔÍùÉÏÏÂ×ßÊ±
+			if ((pathsize == 0) || StackSize(&path) < pathsize)//å·²ç»æ‰¾åˆ°å‡ºå£è¿˜å¯ä»¥å¾€ä¸Šä¸‹èµ°æ—¶
 			{
-				pathsize = StackSize(&path);//Â·¾¶ÎªµÚÒ»´Î×ßµ½³ö¿ÚÎª×¼
+				pathsize = StackSize(&path);//è·¯å¾„ä¸ºç¬¬ä¸€æ¬¡èµ°åˆ°å‡ºå£ä¸ºå‡†
 			}
 		}
-		//ÏÂ
+		//ä¸‹
 		Pos next = cur;
 		next._row -= 1;
 		if (MazeCheckIsAccess(cur,next))
@@ -125,7 +126,7 @@ int MazeGetShortPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//ÉÏ
+		//ä¸Š
 		next = cur;
 		next._row += 1;
 		if (MazeCheckIsAccess(cur,next))
@@ -134,7 +135,7 @@ int MazeGetShortPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//×ó
+		//å·¦
 		next = cur;
 		next._col -= 1;
 		if (MazeCheckIsAccess(cur, next))
@@ -143,7 +144,7 @@ int MazeGetShortPath(Pos entry)
 			StackPush(&path, next);
 			continue;
 		}
-		//ÓÒ
+		//å³
 		next = cur;
 		next._col += 1;
 		if (MazeCheckIsAccess(cur, next))
@@ -153,11 +154,11 @@ int MazeGetShortPath(Pos entry)
 			continue;
 		}
 
-		//»ØËÝ
+		//å›žæº¯
 		StackPop(&path);
 	}
 	return 0;
-}//ÕÒÑ°×î¶ÌÂ·¾¶
+}//æ‰¾å¯»æœ€çŸ­è·¯å¾„
 
 void TestMaze()
 {
@@ -168,8 +169,8 @@ void TestMaze()
 	exit._row = 4;
 	exit._col = 5;*/
 	MazePrint();
-	//printf("ÊÇ·ñÓÐ³ö¿Ú£¿%d\n",MazeGetPath(entry,exit));
+	//printf("æ˜¯å¦æœ‰å‡ºå£ï¼Ÿ%d\n",MazeGetPath(entry,exit));
 	MazeGetShortPath(entry);
-	printf("×î¶ÌÂ·¾¶£º%d\n", pathsize);
+	printf("æœ€çŸ­è·¯å¾„ï¼š%d\n", pathsize);
 	MazePrint();
 }
