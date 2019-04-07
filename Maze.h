@@ -4,6 +4,7 @@
 #include "Stack.h"
 #define N 6
 
+
 //迷宫的定义
 static int maze[N][N] = {
 	{ 0, 0, 0, 0, 0, 0 },
